@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  # ===== MySQL (đơn giản: 1 node) =====
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    command: >
+      mysqld
+      --server-id=1
+      --log-bin=mysql-bin
+      --gtid_mode=ON
+      --enforce_gtid_consistency=ON
+    ports:
+      - "3307:3306"
+    networks: [core]
+
+  # ===== MongoDB Replica Set (2 data + 1 arbiter) =====
+  mongodb1:
+    image: mongo:6
+    container_name: mongodb1
+    command: ["mongod","--replSet","rs0","--bind_ip_all"]
+    ports:
+      - "27117:27017"
+    networks: [core]
+
+  mongodb2:
+    image: mongo:6
+    container_name: mongodb2
+    command: ["mongod","--replSet","rs0","--bind_ip_all"]
+    ports:
+      - "27118:27017"
+    networks: [core]
+
+  mongodb-arbiter:
+    image: mongo:6
+    container_name: mongodb-arbiter
+    command: ["mongod","--replSet","rs0","--bind_ip_all","--port","27019"]
+    ports:
+      - "27119:27019"
+    networks: [core]
+
+networks:
+  core:
+    driver: bridge
