@@ -89,7 +89,12 @@ function bind() {
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div class="min-h-screen bg-gray-50 text-gray-900">
     <div class="max-w-3xl mx-auto p-6 space-y-4">
-      <h1 class="text-2xl font-semibold">Ecom Demo UI</h1>
+      <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-semibold">Ecom Demo UI</h1>
+        <a href="/distributed-test.html" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 text-sm font-medium">
+          🌐 Distributed Testing Dashboard
+        </a>
+      </div>
       <div class="grid grid-cols-2 gap-4">
         <div class="space-y-2">
           <label class="text-sm">Product ID</label>
